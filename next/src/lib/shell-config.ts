@@ -89,9 +89,14 @@ export const SHELL_CONFIG: SiteShellConfig = {
     },
   ],
 
+  // This site's own notices, not the implementing firm's. valuefirstteam.com's
+  // policy states in its own words that it "covers valuefirstteam.com only", so
+  // pointing here sent readers to a document that disclaimed this domain while
+  // HubSpot tracking ran on every page of it. /privacy and /terms are authored
+  // for this site and describe what this site actually does.
   footerLegal: [
-    { label: 'Privacy', href: 'https://valuefirstteam.com/privacy', external: true },
-    { label: 'Terms', href: 'https://valuefirstteam.com/terms', external: true },
+    { label: 'Privacy', href: '/privacy' },
+    { label: 'Terms', href: '/terms' },
   ],
 
   socialLinks: [

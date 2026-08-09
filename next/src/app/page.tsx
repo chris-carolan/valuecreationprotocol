@@ -3,6 +3,11 @@
  * Hand-crafted layout; all visual rhythm in vcp-archetypes.css (Homepage block).
  * Server Component (SSG). Ported faithfully — no content dropped.
  */
+// hand-roll-exempt: the protocol home's editorial front page. Its visual rhythm is
+// the Homepage block of vcp-archetypes.css (.vcp-hero / .vcp-glance / .vcp-section /
+// .vcp-peers), which is where this site's per-node design language is authored; the
+// page emits the semantic markup that stylesheet dresses. The global shell around it
+// (SiteShell, header, footer, overlay root) is @vf/site-kit, applied in app/layout.tsx.
 import type { Metadata } from 'next';
 import { SITE, canonPageStats } from '@/lib/site';
 import { JsonLd } from '@/components/JsonLd';
@@ -15,9 +20,19 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE.url + '/' },
 };
 
+// Reader-facing provenance. Every row here must be a claim this site can stand
+// behind about the PROTOCOL — a reader reads the whole box as one.
+//
+// There is deliberately no "Verified" row. It read "Verified · 12 May 2026" and
+// was taken from the date the cross-citation peer slugs were link-checked
+// (see CROSS_CITATIONS in lib/site.ts). That is an internal link check, but on
+// the front door of a spec it reads as "this protocol was reviewed on that
+// date" — a provenance claim no process here produces. It also sat frozen while
+// the canon moved. `Status` already carries the true provenance, honestly: the
+// protocol is v0.1 and in draft. If a real revision date is wanted back, derive
+// it (the canon docs carry `effectiveDate` in Sanity) rather than typing one.
 const AT_A_GLANCE = [
   { label: 'Status', value: 'v0.1 · Draft · in review' },
-  { label: 'Verified', value: '12 May 2026' },
   {
     label: 'Canon pages',
     // Derived from CANON_PAGE_ARCHETYPES at build time — self-maintains as the
