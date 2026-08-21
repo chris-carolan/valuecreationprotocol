@@ -15,6 +15,21 @@
 import type { SiteShellConfig } from '@vf/site-kit/types';
 
 export const SHELL_CONFIG: SiteShellConfig = {
+  // MEASURED, not assumed. SiteHeader picks the horizontal-nav breakpoint from a
+  // link COUNT (>= 7 links -> 'lg'), and this node has six — so it defaulted to
+  // 'md' and the nav was expected to clear 768 "with at least 144px to spare".
+  // It does not. Measured in a real browser at 768 on the 0.12.2 kit: this nav is
+  // 650px wide, and the document scrolls to 819 in a 768 viewport. The reason is
+  // label WIDTH, not label count: "Encoding Stack" and "Language of Value" render
+  // 125px and 144px on one line each, and the newer header adds whitespace-nowrap
+  // (correctly — a nav label breaking mid-phrase is never right), so they can no
+  // longer wrap their way into fitting the way they did on the old pin.
+  //
+  // `navBreakpoint` is the escape hatch the shell already publishes for exactly
+  // this, so this node states its own measured answer rather than the kit
+  // changing a heuristic on the evidence of one site.
+  navBreakpoint: 'lg',
+
   navPrimary: [
     { label: 'Protocol', href: '/' },
     { label: 'Encoding Stack', href: '/encoding-stack' },
