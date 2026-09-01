@@ -26,9 +26,24 @@ import { SiteShell } from '@vf/site-kit';
 // inset fly-in IS a docked rail). Any archetype item's `detail` prop, any
 // FlyInTrigger, or useFlyInStack().open() reaches it; no per-page wiring.
 import { SiteOverlayRoot } from '@vf/site-kit/flyin';
+// THE ECOSYSTEM SEARCH BOX. One search over everything the org publishes,
+// reachable from the header, the mobile bottom bar and Ctrl/Cmd+K on every page.
+// The panel is shared (@vf/site-kit/search); the ENDPOINT is Studios’, which is
+// the constellation’s one home for it — the only node with a request-time server
+// over the shared corpus. Cross-origin against a registry-derived allow-list,
+// read-only, and it records nothing about what anyone searched for.
+import { EcosystemSearchPanel } from '@vf/site-kit/search';
 import { SHELL_CONFIG } from '@/lib/shell-config';
 import { SITE } from '@/lib/site';
 import { HEADER_BRAND_MARK, FOOTER_BRAND_MARK } from '@/components/VcpBrandMark';
+
+/**
+ * Where the search box calls. ABSOLUTE on purpose: this node does not host the
+ * endpoint. Studios does, because it is the only constellation node with a
+ * request-time server over the shared corpus, and it answers this origin from a
+ * CORS allow-list derived from the shared constellation registry.
+ */
+const SEARCH_ENDPOINT = 'https://valuefirststudios.com/api/search';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -105,6 +120,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           headerBrandMark={HEADER_BRAND_MARK}
           footerBrandMark={FOOTER_BRAND_MARK}
           sticky
+          searchPanel={
+            <EcosystemSearchPanel endpoint={SEARCH_ENDPOINT} currentSite="vcp" />
+          }
         >
           {children}
         </SiteShell>
