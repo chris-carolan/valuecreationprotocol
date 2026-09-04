@@ -287,6 +287,39 @@ export const CROSS_CITATIONS: Record<string, CrossCitationEntry> = {
  * Lookup helper for CrossCitation + Implementers components.
  * Returns null if the path has no canonical entry (defensive).
  */
+/**
+ * Whether a peer page actually answers. Read once per URL per build (this site is
+ * a static export, so "per build" is the whole life of the page). A peer that
+ * cannot be reached in time counts as not live — a "See also" that may be dead is
+ * worse than none. Verified need: valuefirstteam.com/beliefs returned 404 on the
+ * 2026-09-04 walk while the table said it was a live peer.
+ */
+const peerLiveness = new Map<string, Promise<boolean>>();
+export function peerIsLive(url: string): Promise<boolean> {
+  let p = peerLiveness.get(url);
+  if (!p) {
+    p = (async () => {
+      const probe = async (method: 'HEAD' | 'GET') => {
+        const ctl = new AbortController();
+        const t = setTimeout(() => ctl.abort(), 6000);
+        try {
+          const res = await fetch(url, { method, redirect: 'follow', signal: ctl.signal, headers: { 'user-agent': 'vcp-cross-citation-probe' } });
+          return res.status;
+        } catch {
+          return 0;
+        } finally {
+          clearTimeout(t);
+        }
+      };
+      let status = await probe('HEAD');
+      if (status === 405 || status === 403) status = await probe('GET');
+      return status >= 200 && status < 300;
+    })();
+    peerLiveness.set(url, p);
+  }
+  return p;
+}
+
 export function getCrossCitation(path: string): CrossCitationEntry | null {
   return CROSS_CITATIONS[path] ?? null;
 }

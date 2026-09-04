@@ -39,6 +39,14 @@ export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
   'value-realities': '/realities',
 };
 
+/**
+ * The bring-your-own-decision service the Core Beliefs module calls. One service,
+ * on the one property that runs a server (this site is a static export); every
+ * property names the same URL. The module sends the beliefs with the request, so
+ * the service holds no copy of canon.
+ */
+const DECIDE_ENDPOINT = 'https://valuefirststudios.com/api/compass/decide';
+
 /** The OG image this property already ships for each framework route. */
 const OG: Record<FrameworkKey, string> = {
   'core-beliefs': '/og/og-beliefs.jpg',
@@ -104,7 +112,7 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
         specMeta={[
           { label: 'Status', value: 'canonical' },
           { label: 'Cite', value: `valuecreationprotocol.com${path}` },
-          { label: 'Source', value: 'one derived copy of canon, gated' },
+          { label: 'Source', value: 'Generated from the canonical reference and checked against it on every build' },
         ]}
       >
         <FrameworkModule
@@ -112,6 +120,7 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
           media={media}
           showClaim={false}
           hrefs={{ trap: (slug) => `${FRAMEWORK_PATHS['complexity-traps']}#trap-${slug}` }}
+          decideEndpoint={DECIDE_ENDPOINT}
         />
       </CanonArchetype>
     </>

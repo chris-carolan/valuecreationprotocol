@@ -8,7 +8,7 @@
  * peer cross-citation (auto-suppresses when peerSlug is null) → implementer band.
  */
 import type { ReactNode } from 'react';
-import { SITE, getCrossCitation } from '@/lib/site';
+import { SITE, getCrossCitation, peerIsLive } from '@/lib/site';
 
 export interface SpecMetaItem {
   label: string;
@@ -29,7 +29,7 @@ export interface CanonArchetypeProps {
   children: ReactNode;
 }
 
-export function CanonArchetype({
+export async function CanonArchetype({
   eyebrow,
   title,
   lead,
@@ -38,7 +38,12 @@ export function CanonArchetype({
   children,
 }: CanonArchetypeProps) {
   const cite = getCrossCitation(path);
-  const peerUrl = cite?.peerSlug ? `${SITE.implementer.url}${cite.peerSlug}` : null;
+  const peerCandidate = cite?.peerSlug ? `${SITE.implementer.url}${cite.peerSlug}` : null;
+  // The cross-citation suppresses itself when the peer is not live. The table was
+  // verified by hand once (2026-05-12) and drifted: on the 2026-09-04 walk the
+  // /beliefs peer answered 404 on the live page. The probe runs at build time, so a
+  // static export never ships a dead "See also".
+  const peerUrl = peerCandidate && (await peerIsLive(peerCandidate)) ? peerCandidate : null;
 
   return (
     <article className="canon">
