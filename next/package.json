@@ -15,8 +15,8 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@vf/brand": "github:Value-First-Team/vf-brand#a82b211e6f10b65d3eb7ea076ef285dca01b07e0",
-    "@vf/design-engine": "github:Value-First-Team/vf-design-engine#9972e0641f2ab8d6f08887b9e21eab00f0042fbf",
+    "@vf/brand": "github:Value-First-Team/vf-brand#91b985d4cc4bc06d6374ed3e2aa5ad3024b26849",
+    "@vf/design-engine": "github:Value-First-Team/vf-design-engine#d1e77b7a57b1760647c7f1c44aee294af35a59d6",
     "@vf/recipes": "github:Value-First-Team/vf-recipes#be6c62f",
     "@vf/site-kit": "github:Value-First-Team/vf-site-kit#407357e799c1b399965c2f34d916b69ebc528710",
     "@vf/ui": "github:Value-First-Team/vf-ui#c2f230bc76a5076790b8a11c8f5b5939f06be871",
