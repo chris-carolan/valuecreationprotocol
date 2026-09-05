@@ -185,53 +185,6 @@ export async function getUnifiedGoals() {
 }
 
 /**
- * Get the 3 Three-Org records, ordered by sortOrder asc (Customer=1, Operations=2, Finance=3).
- *
- * Each org carries its full structured field set: name, slug, sortOrder, accentColor,
- * purpose, oneLineDefinition, owns[], doesNotOwn, keyPrinciple, whoBelongsHere[],
- * humanRole, leadershipMode, aiLeaderName, aiHandles, humanHandles, firmLivedExample,
- * plus resolved primaryUnifiedView and supportingUnifiedViews references and relatedTraps.
- */
-export async function getThreeOrgs() {
-  const result = await sanityQuery<
-    Array<{
-      _id: string;
-      name: string;
-      slug?: { current: string };
-      sortOrder: number;
-      accentColor?: string;
-      icon?: string;
-      purpose?: string;
-      oneLineDefinition?: string;
-      owns?: string[];
-      doesNotOwn?: string;
-      keyPrinciple?: string;
-      whoBelongsHere?: string[];
-      humanRole?: string;
-      leadershipMode?: 'human-led' | 'ai-led' | 'shared';
-      aiLeaderName?: string;
-      aiHandles?: string;
-      humanHandles?: string;
-      firmLivedExample?: string;
-      primaryUV?: { _id: string; name: string; slug?: { current: string } } | null;
-      supportingUVs?: Array<{ _id: string; name: string; slug?: { current: string } }> | null;
-      traps?: Array<{ _id: string; name: string; slug?: { current: string } }> | null;
-    }>
-  >(
-    `*[_type == "threeOrg"] | order(sortOrder asc){
-      _id, name, slug, sortOrder, accentColor, icon,
-      purpose, oneLineDefinition,
-      owns, doesNotOwn, keyPrinciple, whoBelongsHere,
-      humanRole, leadershipMode, aiLeaderName, aiHandles, humanHandles, firmLivedExample,
-      "primaryUV": primaryUnifiedView->{_id, name, slug},
-      "supportingUVs": supportingUnifiedViews[]->{_id, name, slug},
-      "traps": relatedTraps[]->{_id, name, slug}
-    }`
-  );
-  return result ?? [];
-}
-
-/**
  * Get the Value-Led Growth singleton document.
  *
  * Returns null if the document doesn't exist. Resolves nested references inside

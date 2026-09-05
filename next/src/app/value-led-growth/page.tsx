@@ -7,6 +7,19 @@ import type { Metadata } from 'next';
 import { SITE } from '@/lib/site';
 import { CanonArchetype } from '@/components/CanonArchetype';
 import { getValueLedGrowth } from '@/lib/sanity/canon';
+import { THREE_ORGS } from '@vf/brand';
+
+/**
+ * A Sanity org record's name → the anchor the /three-orgs module renders for that
+ * org, joined through the derived copy of canon. /three-orgs became the shared
+ * framework module on 2026-09-04 and its cards are anchored `org-<id>`; a record
+ * whose name matches no canonical org links to the page with no fragment rather
+ * than to an anchor that is not there.
+ */
+function orgAnchor(name: string): string {
+  const org = THREE_ORGS.find((o) => o.name === name);
+  return org ? `#org-${org.id}` : '';
+}
 
 export const metadata: Metadata = {
   title: 'Value-Led Growth',
@@ -125,7 +138,7 @@ export default async function ValueLedGrowthPage() {
                   <ul className="canon-record-tags">
                     {vlg.componentWho.orgs.map((org) => (
                       <li key={org._id}>
-                        <a href={`/three-orgs#${org.slug?.current ?? ''}`} className="canon-record-tag">
+                        <a href={`/three-orgs${orgAnchor(org.name)}`} className="canon-record-tag">
                           <span className="canon-record-tag-label">org</span>
                           {org.name}
                         </a>

@@ -12,7 +12,9 @@
  * The five authored pages this replaced (beliefs, twelve-traps, value-path,
  * unified-views, realities — each a Sanity-fed React port of an Astro page, each
  * a second author of names, counts and order) are retired by the commit that
- * introduced this file; the retirement is named there.
+ * introduced this file; the retirement is named there. /three-orgs joined them on
+ * 2026-09-04, and what its Sanity records carried that canon does not is named in
+ * that commit.
  */
 import type { Metadata } from 'next';
 import {
@@ -24,6 +26,7 @@ import {
   COMPLEXITY_TRAPS,
   VALUE_REALITIES,
   FIVE_LAYERS,
+  THREE_ORGS,
   type FrameworkKey,
 } from '@vf/brand';
 import { SITE } from '@/lib/site';
@@ -66,6 +69,7 @@ export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
   'unified-views': '/unified-views',
   'value-realities': '/realities',
   'five-layer-model': '/five-layers',
+  'three-org-model': '/three-orgs',
 };
 
 /**
@@ -84,6 +88,7 @@ const OG: Record<FrameworkKey, string> = {
   'unified-views': '/og/og-unified-views.jpg',
   'value-realities': '/og/og-realities.jpg',
   'five-layer-model': '/og/og-five-layers.png',
+  'three-org-model': '/og/og-three-orgs.jpg',
 };
 
 /** Page metadata composed from the module's own claim — the title tag cannot drift from the page. */
@@ -113,6 +118,8 @@ function definedTerms(framework: FrameworkKey): { name: string; description: str
       return VALUE_REALITIES.map((r) => ({ name: r.name, description: r.corePrinciple, code: r.slug }));
     case 'five-layer-model':
       return FIVE_LAYERS.map((l) => ({ name: l.name, description: l.holds, code: `fl-${l.order}` }));
+    case 'three-org-model':
+      return THREE_ORGS.map((o) => ({ name: o.name, description: o.oneLine, code: `org-${o.id}` }));
   }
 }
 
