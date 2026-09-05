@@ -79,6 +79,12 @@ export const METHODOLOGY_PAGES: Array<{ label: string; href: string; summary: st
     summary: 'UCV, URV, UBC, UTE — the visibility framework.',
   },
   {
+    label: 'Five-Layer Model',
+    href: '/five-layers',
+    // Canon's own words for the model, not a summary written here.
+    summary: 'Any organization as five layers, stacked bottom-up — each layer earns the weight of the one above it.',
+  },
+  {
     label: 'Value Loop',
     href: '/value-loop',
     summary: 'The continuous Discover → Codify → Deliver → Learn loop.',
@@ -234,6 +240,13 @@ export const CROSS_CITATIONS: Record<string, CrossCitationEntry> = {
   '/ai-native-shift': {
     peerSlug: '/ai-native-shift',
     peerLabel: 'AI-Native Shift at valuefirstteam.com',
+  },
+  // The Five-Layer Model has no peer page on valuefirstteam.com yet. The model
+  // itself is live elsewhere in the constellation — the Mirror's five-layer court
+  // on ainativeshift.com — but the firm site does not host the framework module.
+  '/five-layers': {
+    peerSlug: null,
+    note: 'valuefirstteam.com does not host the Five-Layer Model yet.',
   },
   '/cvp-vs-vcp': {
     peerSlug: '/cvp',

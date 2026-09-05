@@ -23,12 +23,40 @@ import {
   UNIFIED_VIEWS,
   COMPLEXITY_TRAPS,
   VALUE_REALITIES,
+  FIVE_LAYERS,
   type FrameworkKey,
 } from '@vf/brand';
 import { SITE } from '@/lib/site';
 import { CanonArchetype } from '@/components/CanonArchetype';
 import { JsonLd } from '@/components/JsonLd';
 import { frameworkMedia } from '@/lib/framework-media';
+
+// The AI-Native Shift plates this property serves. Static imports straight out of
+// @vf/brand's "./assets/*" export, so the bytes are the package's and this repo
+// stores no copy of them; Next fingerprints and serves each one. All eight files
+// are imported because PlateStrip chooses the dark or the light variant in the
+// browser, from the theme the reader is actually in.
+import plateFiveLayersDark from '@vf/brand/assets/ai-native-shift/ans-five-layers-dark.png';
+import plateFiveLayersLight from '@vf/brand/assets/ai-native-shift/ans-five-layers-light.png';
+import plateTodayVsDoneDark from '@vf/brand/assets/ai-native-shift/ans-today-vs-done-dark.png';
+import plateTodayVsDoneLight from '@vf/brand/assets/ai-native-shift/ans-today-vs-done-light.png';
+import plateAttackWrongEndDark from '@vf/brand/assets/ai-native-shift/ans-attack-wrong-end-dark.png';
+import plateAttackWrongEndLight from '@vf/brand/assets/ai-native-shift/ans-attack-wrong-end-light.png';
+import plateTensionHeldDark from '@vf/brand/assets/ai-native-shift/ans-tension-held-dark.png';
+import plateTensionHeldLight from '@vf/brand/assets/ai-native-shift/ans-tension-held-light.png';
+
+/** A plate filename → the URL this property serves it from. Unknown file → no image. */
+const PLATE_URLS: Record<string, { src: string }> = {
+  'ans-five-layers-dark.png': plateFiveLayersDark,
+  'ans-five-layers-light.png': plateFiveLayersLight,
+  'ans-today-vs-done-dark.png': plateTodayVsDoneDark,
+  'ans-today-vs-done-light.png': plateTodayVsDoneLight,
+  'ans-attack-wrong-end-dark.png': plateAttackWrongEndDark,
+  'ans-attack-wrong-end-light.png': plateAttackWrongEndLight,
+  'ans-tension-held-dark.png': plateTensionHeldDark,
+  'ans-tension-held-light.png': plateTensionHeldLight,
+};
+const plates = (file: string): string => PLATE_URLS[file]?.src ?? '';
 
 /** The route each framework lives at on THIS property (its canon shell keys cross-citation by path). */
 export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
@@ -37,6 +65,7 @@ export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
   'value-path': '/value-path',
   'unified-views': '/unified-views',
   'value-realities': '/realities',
+  'five-layer-model': '/five-layers',
 };
 
 /**
@@ -54,6 +83,7 @@ const OG: Record<FrameworkKey, string> = {
   'value-path': '/og/og-value-path.jpg',
   'unified-views': '/og/og-unified-views.jpg',
   'value-realities': '/og/og-realities.jpg',
+  'five-layer-model': '/og/og-five-layers.png',
 };
 
 /** Page metadata composed from the module's own claim — the title tag cannot drift from the page. */
@@ -81,6 +111,8 @@ function definedTerms(framework: FrameworkKey): { name: string; description: str
       return COMPLEXITY_TRAPS.map((t) => ({ name: `The ${t.name}`, description: t.meaning, code: t.slug }));
     case 'value-realities':
       return VALUE_REALITIES.map((r) => ({ name: r.name, description: r.corePrinciple, code: r.slug }));
+    case 'five-layer-model':
+      return FIVE_LAYERS.map((l) => ({ name: l.name, description: l.holds, code: `fl-${l.order}` }));
   }
 }
 
@@ -121,6 +153,7 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
           showClaim={false}
           hrefs={{ trap: (slug) => `${FRAMEWORK_PATHS['complexity-traps']}#trap-${slug}` }}
           decideEndpoint={DECIDE_ENDPOINT}
+          plates={plates}
         />
       </CanonArchetype>
     </>
