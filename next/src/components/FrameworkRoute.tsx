@@ -87,6 +87,13 @@ const DECIDE_ENDPOINT = 'https://valuefirststudios.com/api/compass/decide';
  */
 const RECOGNIZE_ENDPOINT = 'https://valuefirststudios.com/api/compass/recognize';
 
+/**
+ * The say-it-in-your-world service the Value Path module calls, on the same terms
+ * again: the eight places travel with the request, the canonical first-person line
+ * stays on the page beside whatever comes back, and nothing a reader types is stored.
+ */
+const TRANSLATE_ENDPOINT = 'https://valuefirststudios.com/api/compass/translate';
+
 /** The OG image this property already ships for each framework route. */
 const OG: Record<FrameworkKey, string> = {
   'core-beliefs': '/og/og-beliefs.jpg',
@@ -175,6 +182,7 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
           }}
           decideEndpoint={DECIDE_ENDPOINT}
           recognizeEndpoint={RECOGNIZE_ENDPOINT}
+          translateEndpoint={TRANSLATE_ENDPOINT}
           plates={plates}
         />
       </CanonArchetype>
