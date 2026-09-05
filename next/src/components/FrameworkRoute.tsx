@@ -80,6 +80,13 @@ export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
  */
 const DECIDE_ENDPOINT = 'https://valuefirststudios.com/api/compass/decide';
 
+/**
+ * The say-it-in-your-own-words service the Complexity Traps module calls, on the same
+ * terms: one service on the one property that runs a server, named by every property,
+ * with the twelve traps travelling in the request so the service holds no copy of canon.
+ */
+const RECOGNIZE_ENDPOINT = 'https://valuefirststudios.com/api/compass/recognize';
+
 /** The OG image this property already ships for each framework route. */
 const OG: Record<FrameworkKey, string> = {
   'core-beliefs': '/og/og-beliefs.jpg',
@@ -158,8 +165,16 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
           framework={framework}
           media={media}
           showClaim={false}
-          hrefs={{ trap: (slug) => `${FRAMEWORK_PATHS['complexity-traps']}#trap-${slug}` }}
+          hrefs={{
+            trap: (slug) => `${FRAMEWORK_PATHS['complexity-traps']}#trap-${slug}`,
+            // The other direction, added 2026-09-04: the Realities page has always
+            // linked to every trap by name, and a reader who recognized themselves on
+            // the traps page was left with the room and nothing else. Each Reality card
+            // already carries `id="reality-<slug>"`, so the landing point exists.
+            reality: (slug) => `${FRAMEWORK_PATHS['value-realities']}#reality-${slug}`,
+          }}
           decideEndpoint={DECIDE_ENDPOINT}
+          recognizeEndpoint={RECOGNIZE_ENDPOINT}
           plates={plates}
         />
       </CanonArchetype>
