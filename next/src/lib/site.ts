@@ -225,8 +225,12 @@ export const CROSS_CITATIONS: Record<string, CrossCitationEntry> = {
     peerSlug: '/value-path',
     peerLabel: 'Value Path at valuefirstteam.com',
   },
+  // 2026-09-05: the firm site now serves this framework at the SAME path this
+  // one does. It used to answer only at /traps, which is now a 308 to
+  // /twelve-traps — so the citation pointed a reader through a redirect for no
+  // reason. Both ends read the constellation's one route table now.
   '/twelve-traps': {
-    peerSlug: '/traps',
+    peerSlug: '/twelve-traps',
     peerLabel: 'Twelve Traps at valuefirstteam.com',
   },
   '/unified-views': {
@@ -241,12 +245,13 @@ export const CROSS_CITATIONS: Record<string, CrossCitationEntry> = {
     peerSlug: '/ai-native-shift',
     peerLabel: 'AI-Native Shift at valuefirstteam.com',
   },
-  // The Five-Layer Model has no peer page on valuefirstteam.com yet. The model
-  // itself is live elsewhere in the constellation — the Mirror's five-layer court
-  // on ainativeshift.com — but the firm site does not host the framework module.
+  // 2026-09-05: the firm site now hosts the Five-Layer Model too, at the same
+  // path. It was peerless here because /five-layers did not exist there; it
+  // answers 200 now, and the build-time probe below is what proves it on every
+  // build rather than this comment.
   '/five-layers': {
-    peerSlug: null,
-    note: 'valuefirstteam.com does not host the Five-Layer Model yet.',
+    peerSlug: '/five-layers',
+    peerLabel: 'The Five-Layer Model at valuefirstteam.com',
   },
   '/cvp-vs-vcp': {
     peerSlug: '/cvp',

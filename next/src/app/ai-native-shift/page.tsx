@@ -49,7 +49,7 @@ export default function AiNativeShiftPage() {
           If you are a leadership team looking to operationalize VCP in your own organization — not
           just study the protocol — the AI-Native Shift is where the implementation work happens. The
           standalone home for the show, the program, and the framework reference (including the
-          reciprocal page at <code>ainativeshift.com/framework/vcp</code>) is ainativeshift.com.
+          reciprocal page at <code>ainativeshift.com/vcp</code>) is ainativeshift.com.
         </p>
       </section>
 
@@ -65,12 +65,12 @@ export default function AiNativeShiftPage() {
         </a>
         <a
           className="canon-handoff-link"
-          href="https://ainativeshift.com/framework/vcp"
+          href="https://ainativeshift.com/vcp"
           target="_blank"
           rel="noopener noreferrer"
           style={{ marginTop: '0.1rem' }}
         >
-          ainativeshift.com/framework/vcp <span aria-hidden="true">&rarr;</span>
+          ainativeshift.com/vcp <span aria-hidden="true">&rarr;</span>
         </a>
       </aside>
 

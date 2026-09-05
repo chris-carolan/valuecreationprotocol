@@ -1,34 +1,44 @@
 /**
  * FrameworkRoute — the thin host for one canonical framework module on this property.
  *
- * Chris ruled 2026-09-01 that nothing is elevated on only one site: the five
+ * Chris ruled 2026-09-01 that nothing is elevated on only one site: the seven
  * framework modules are shared entities on every Value-First property. So this
  * file is the WHOLE of what this property adds around a module — the site's canon
  * shell (eyebrow, display, lead, spec meta, the implementer cross-citation) fed
- * from the module's own claim words, a DefinedTermSet for search engines derived
- * from the same copy, and the media join read once at build. Not one framework
- * sentence is written here. Edit the framework in @vf/brand and re-pin.
+ * from the module's own claim words, and the media join read once at build. Not
+ * one framework sentence is written here. Edit the framework in @vf/brand and
+ * re-pin.
  *
- * The five authored pages this replaced (beliefs, twelve-traps, value-path,
- * unified-views, realities — each a Sanity-fed React port of an Astro page, each
- * a second author of names, counts and order) are retired by the commit that
- * introduced this file; the retirement is named there. /three-orgs joined them on
- * 2026-09-04, and what its Sanity records carried that canon does not is named in
- * that commit.
+ * ==========================================================================
+ * THE TABLES COME FROM THE KIT NOW (2026-09-05)
+ * ==========================================================================
+ *
+ * This file wrote its own route table, its own three compass service URLs, its
+ * own schema.org DefinedTerm switch and its own page-metadata composer. Every one
+ * of those is a fact about the CONSTELLATION, not about this property, so they
+ * were promoted into `@vf/site-kit/framework` before a second property could copy
+ * them — Global-first, promote before the second copy. They are imported here and
+ * the local copies are deleted, so a change to any of them reaches this property
+ * by moving one pin.
+ *
+ * WHAT DID NOT MOVE, AND WHY. The kit also ships `FrameworkPage`, a whole route
+ * that frames the module in the kit's own marketing `Hero`. This property cannot
+ * use it: every canon page here is wrapped in `CanonArchetype`, which carries the
+ * canon hero, the spec-meta strip, the build-time peer cross-citation and the
+ * implementer band — this site's shell, and the thing that makes a canon page on
+ * this property read as a specification rather than as marketing. A page frame is
+ * genuinely this property's, so the shell stays and the tables are adopted. The
+ * plate bytes and the OG cards stay too, for the reason the kit states: a library
+ * cannot portably import a host's PNG, and it cannot ship a property's social card.
  */
 import type { Metadata } from 'next';
+import { FrameworkModule, frameworkClaim, type FrameworkKey } from '@vf/brand';
 import {
-  FrameworkModule,
-  frameworkClaim,
-  VALUE_PATH_STAGES,
-  CORE_BELIEFS,
-  UNIFIED_VIEWS,
-  COMPLEXITY_TRAPS,
-  VALUE_REALITIES,
-  FIVE_LAYERS,
-  THREE_ORGS,
-  type FrameworkKey,
-} from '@vf/brand';
+  FRAMEWORK_PATHS,
+  COMPASS_SERVICES,
+  frameworkPageMetadata,
+  frameworkJsonLd,
+} from '@vf/site-kit/framework';
 import { SITE } from '@/lib/site';
 import { CanonArchetype } from '@/components/CanonArchetype';
 import { JsonLd } from '@/components/JsonLd';
@@ -61,38 +71,11 @@ const PLATE_URLS: Record<string, { src: string }> = {
 };
 const plates = (file: string): string => PLATE_URLS[file]?.src ?? '';
 
-/** The route each framework lives at on THIS property (its canon shell keys cross-citation by path). */
-export const FRAMEWORK_PATHS: Record<FrameworkKey, string> = {
-  'core-beliefs': '/beliefs',
-  'complexity-traps': '/twelve-traps',
-  'value-path': '/value-path',
-  'unified-views': '/unified-views',
-  'value-realities': '/realities',
-  'five-layer-model': '/five-layers',
-  'three-org-model': '/three-orgs',
-};
-
 /**
- * The bring-your-own-decision service the Core Beliefs module calls. One service,
- * on the one property that runs a server (this site is a static export); every
- * property names the same URL. The module sends the beliefs with the request, so
- * the service holds no copy of canon.
+ * The route table is re-exported rather than re-declared, so anything on this
+ * property that keys off a framework path reads the constellation's one copy.
  */
-const DECIDE_ENDPOINT = 'https://valuefirststudios.com/api/compass/decide';
-
-/**
- * The say-it-in-your-own-words service the Complexity Traps module calls, on the same
- * terms: one service on the one property that runs a server, named by every property,
- * with the twelve traps travelling in the request so the service holds no copy of canon.
- */
-const RECOGNIZE_ENDPOINT = 'https://valuefirststudios.com/api/compass/recognize';
-
-/**
- * The say-it-in-your-world service the Value Path module calls, on the same terms
- * again: the eight places travel with the request, the canonical first-person line
- * stays on the page beside whatever comes back, and nothing a reader types is stored.
- */
-const TRANSLATE_ENDPOINT = 'https://valuefirststudios.com/api/compass/translate';
+export { FRAMEWORK_PATHS };
 
 /** The OG image this property already ships for each framework route. */
 const OG: Record<FrameworkKey, string> = {
@@ -105,58 +88,28 @@ const OG: Record<FrameworkKey, string> = {
   'three-org-model': '/og/og-three-orgs.jpg',
 };
 
-/** Page metadata composed from the module's own claim — the title tag cannot drift from the page. */
+/**
+ * Page metadata composed from the module's own claim — the title tag cannot drift
+ * from the page, because both read the same canon. The composition is the kit's;
+ * what this property adds is its own OG card.
+ */
 export function frameworkMetadata(framework: FrameworkKey): Metadata {
-  const claim = frameworkClaim(framework);
-  const path = FRAMEWORK_PATHS[framework];
-  return {
-    title: claim.eyebrow.replace(/^The /, ''),
-    description: claim.headline,
-    openGraph: { url: SITE.url + path, images: [OG[framework]] },
-    alternates: { canonical: SITE.url + path },
-  };
-}
-
-/** The framework's items as schema.org DefinedTerms — names and order from the derived copy. */
-function definedTerms(framework: FrameworkKey): { name: string; description: string; code: string }[] {
-  switch (framework) {
-    case 'value-path':
-      return VALUE_PATH_STAGES.map((s) => ({ name: s.name, description: `"${s.mantra}" — ${s.meaning}`, code: `vp-${s.order}` }));
-    case 'core-beliefs':
-      return CORE_BELIEFS.map((b) => ({ name: b.name, description: b.meaning, code: `belief-${b.order}` }));
-    case 'unified-views':
-      return UNIFIED_VIEWS.map((v) => ({ name: v.name, description: v.meaning, code: v.id.toLowerCase() }));
-    case 'complexity-traps':
-      return COMPLEXITY_TRAPS.map((t) => ({ name: `The ${t.name}`, description: t.meaning, code: t.slug }));
-    case 'value-realities':
-      return VALUE_REALITIES.map((r) => ({ name: r.name, description: r.corePrinciple, code: r.slug }));
-    case 'five-layer-model':
-      return FIVE_LAYERS.map((l) => ({ name: l.name, description: l.holds, code: `fl-${l.order}` }));
-    case 'three-org-model':
-      return THREE_ORGS.map((o) => ({ name: o.name, description: o.oneLine, code: `org-${o.id}` }));
-  }
+  return frameworkPageMetadata(framework, SITE.url, { ogImage: OG[framework] }) as Metadata;
 }
 
 export async function FrameworkRoute({ framework }: { framework: FrameworkKey }) {
   const claim = frameworkClaim(framework);
   const path = FRAMEWORK_PATHS[framework];
   const media = await frameworkMedia(framework);
-  const terms = definedTerms(framework);
-
-  const ld = {
-    '@context': 'https://schema.org',
-    '@graph': terms.map((t) => ({
-      '@type': 'DefinedTerm',
-      name: t.name,
-      description: t.description,
-      termCode: t.code,
-      inDefinedTermSet: { '@type': 'DefinedTermSet', name: 'Value Creation Protocol Glossary', url: `${SITE.url}/glossary` },
-    })),
-  };
 
   return (
     <>
-      <JsonLd data={ld} />
+      <JsonLd
+        data={frameworkJsonLd(framework, SITE.url, {
+          name: 'Value Creation Protocol Glossary',
+          url: `${SITE.url}/glossary`,
+        })}
+      />
       <CanonArchetype
         eyebrow={claim.eyebrow}
         title={claim.headline}
@@ -180,9 +133,9 @@ export async function FrameworkRoute({ framework }: { framework: FrameworkKey })
             // already carries `id="reality-<slug>"`, so the landing point exists.
             reality: (slug) => `${FRAMEWORK_PATHS['value-realities']}#reality-${slug}`,
           }}
-          decideEndpoint={DECIDE_ENDPOINT}
-          recognizeEndpoint={RECOGNIZE_ENDPOINT}
-          translateEndpoint={TRANSLATE_ENDPOINT}
+          decideEndpoint={COMPASS_SERVICES.decide}
+          recognizeEndpoint={COMPASS_SERVICES.recognize}
+          translateEndpoint={COMPASS_SERVICES.translate}
           plates={plates}
         />
       </CanonArchetype>
