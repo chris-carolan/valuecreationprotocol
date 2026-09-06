@@ -3,6 +3,12 @@
   "installCommand": "git config --global url.\"https://${GITHUB_TOKEN}@github.com/\".insteadOf \"https://github.com/\" && npm install",
   "outputDirectory": "out",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/unified-views/customer", "destination": "https://valuefirstteam.com/language-of-value/unified-customer-view", "permanent": true },
+    { "source": "/unified-views/revenue-view", "destination": "https://valuefirstteam.com/language-of-value/unified-revenue-view", "permanent": true },
+    { "source": "/unified-views/business-context", "destination": "https://valuefirstteam.com/language-of-value/unified-business-context", "permanent": true },
+    { "source": "/unified-views/team-enablement", "destination": "https://valuefirstteam.com/language-of-value/unified-team-enablement", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
