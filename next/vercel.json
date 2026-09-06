@@ -7,7 +7,8 @@
     { "source": "/unified-views/customer", "destination": "https://valuefirstteam.com/language-of-value/unified-customer-view", "permanent": true },
     { "source": "/unified-views/revenue-view", "destination": "https://valuefirstteam.com/language-of-value/unified-revenue-view", "permanent": true },
     { "source": "/unified-views/business-context", "destination": "https://valuefirstteam.com/language-of-value/unified-business-context", "permanent": true },
-    { "source": "/unified-views/team-enablement", "destination": "https://valuefirstteam.com/language-of-value/unified-team-enablement", "permanent": true }
+    { "source": "/unified-views/team-enablement", "destination": "https://valuefirstteam.com/language-of-value/unified-team-enablement", "permanent": true },
+    { "source": "/unified-views/wizard", "destination": "https://valuefirstteam.com/unified-views/wizard", "permanent": true }
   ],
   "headers": [
     {
